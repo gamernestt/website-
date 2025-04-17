@@ -1,8 +1,16 @@
+name: Gitpod Keepalive
+
 on:
-    schedule:
-      - cron: '*/1 * * * *'  # Every 10 minutes
-  jobs:
-    keepalive:
-      runs-on: ubuntu-latest
-      steps:
-        - run: curl -s "https://gamernestt-test-vx2xjqnhnr6.ws-us118.gitpod.io/" > /dev/null
+  schedule:
+    - cron: '*/3 * * * *'  # Runs every 3 minutes (GitHub's minimum interval)
+  workflow_dispatch:        # Allows manual triggering from GitHub UI
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Gitpod Workspace
+        run: |
+          WORKSPACE_URL="https://gamernestt-test-vx2xjqnhnr6.ws-us118.gitpod.io"
+          echo "Pinging Gitpod workspace: $WORKSPACE_URL"
+          curl -s -o /dev/null -w "HTTP Status: %{http_code}\n" "$WORKSPACE_URL"
