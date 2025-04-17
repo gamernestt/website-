@@ -1,0 +1,17 @@
+name: Infinite Gitpod Keepalive
+
+on:
+  workflow_dispatch:  # Start manually
+  push:               # Optional: restart on code changes
+
+jobs:
+  keepalive:
+    runs-on: self-hosted  # Critical change
+    steps:
+      - name: Infinite Ping Loop
+        run: |
+          while true; do
+            curl -s "https://gamernestt-test-vx2xjqnhnr6.ws-us118.gitpod.io" >/dev/null
+            echo "$(date) - Ping sent"
+            sleep 60  # 1 minute interval
+          done
